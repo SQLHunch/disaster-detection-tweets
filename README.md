@@ -71,6 +71,43 @@ The weighted F1 score across classes was **0.78**.
 
 ---
 
+# Required Libraries for Running the notebook
+
+Below is a list of all the libraries required to run the Python (3.9.20) code for this project.
+
+## Core Libraries
+1. **NumPy** - For numerical computations and handling arrays.
+2. **Pandas** - For data manipulation and analysis.
+3. **Matplotlib** - For creating visualizations and plots.
+4. **Seaborn** - For enhanced visualizations.
+
+## Machine Learning and Evaluation
+5. **Scikit-learn** - For metrics (F1 Score, classification report) and utilities (class weight computation).
+
+## Natural Language Processing
+6. **TensorFlow** - For building and training the deep learning model (LSTM and Bidirectional LSTM layers).
+   - Required submodules:
+     - `tensorflow.keras.layers`
+     - `tensorflow.keras.models`
+     - `tensorflow.keras.callbacks`
+
+## Data Preprocessing
+7. **TensorFlow/Keras Preprocessing** - For text tokenization and sequence padding.
+   - Example modules:
+     - `tensorflow.keras.preprocessing.text.Tokenizer`
+     - `tensorflow.keras.preprocessing.sequence.pad_sequences`
+
+---
+
+## Installation Commands
+
+To install all required libraries, you can run the following:
+
+```bash
+pip install numpy pandas matplotlib seaborn scikit-learn tensorflow
+
+---
+
 ## How to Run
 
 1. Clone the repository:
