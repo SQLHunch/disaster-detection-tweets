@@ -1,97 +1,79 @@
 # Disaster Detection with Tweets
 
-This repository contains the code and deliverables for the "Disaster Detection with Tweets" project, a binary classification problem to identify whether tweets are about real disasters or not. The project uses natural language processing (NLP) techniques and machine learning models to achieve the goal.
-
-## Table of Contents
-
-- [Project Overview](#project-overview)
-- [Dataset](#dataset)
-- [Approach](#approach)
-  - [Data Preprocessing](#data-preprocessing)
-  - [Feature Engineering](#feature-engineering)
-  - [Modeling](#modeling)
-- [Results](#results)
-- [Usage](#usage)
-  - [Dependencies](#dependencies)
-  - [How to Run](#how-to-run)
-- [Future Work](#future-work)
-- [Acknowledgements](#acknowledgements)
+This repository contains the code and resources for the **"Disaster Detection with Tweets"** project, which predicts whether a tweet describes a real disaster or not. The solution leverages deep learning techniques with a focus on recurrent neural networks (RNNs) and Bidirectional LSTMs to extract temporal relationships in the text data.
 
 ---
 
 ## Project Overview
 
-The goal of this project is to classify tweets as either related to disasters (`1`) or not related to disasters (`0`). This is a Kaggle competition problem titled **"Natural Language Processing with Disaster Tweets"**.
+In this binary classification task, tweets are analyzed to predict whether they describe actual disaster events. The dataset comes from a Kaggle competition and consists of labeled tweets for training and unlabeled tweets for testing.
 
-Be sure you create a Data folder on the same folder where the ipynb is. The files can be downloaded from Kaggle.
+**Key Metrics:**
+- **F1 Score**: Used as the primary metric for evaluation to balance precision and recall.
+- **Final Kaggle Score**: 0.780 (Improved from the earlier 0.778).
 
-https://www.kaggle.com/competitions/nlp-getting-started/data
+---
 
 ## Dataset
 
-The dataset contains:
-- **Training Set:** 7,613 labeled tweets.
-- **Test Set:** 3,263 tweets without labels.
-- **Features:**
-  - `text`: The tweet content.
-  - `keyword`: Disaster-related keywords (if available).
-  - `location`: User location (if available).
-  
-The target column indicates whether a tweet is disaster-related (`1`) or not (`0`).
+https://www.kaggle.com/competitions/nlp-getting-started/data
 
-## Approach
 
-### Data Preprocessing
+The dataset consists of:
+- **Train Data**: 7,488 labeled tweets (`0` for non-disaster and `1` for disaster).
+- **Test Data**: 3,263 unlabeled tweets for predictions.
 
-1. **Handling Missing Data:** Filled missing values in `keyword` and `location` with placeholders.
-2. **Text Cleaning:** 
-   - Removed URLs, mentions, hashtags, special characters, and numbers.
-   - Converted all text to lowercase.
-3. **Tokenization and Padding:** 
-   - Tokenized tweets into sequences using Keras.
-   - Padded sequences to ensure consistent input length for the model.
+Data preprocessing includes:
+- Lowercasing, removing URLs, mentions, hashtags, and special characters.
+- Padding sequences to a uniform length of 50 tokens.
 
-### Feature Engineering
+---
 
-- Extracted additional features:
-  - Word count, character count, average word length, and presence of keywords.
-- Utilized tokenized and padded sequences for embedding layers.
+## Model Architecture
 
-### Modeling
+The final model employs a deep learning architecture using Bidirectional LSTMs for robust performance:
+1. **Embedding Layer**: Converts text to dense numerical vectors (128 dimensions).
+2. **Bidirectional LSTM (128 units)**: Captures temporal relationships in both forward and backward directions.
+3. **Dropout Layers**: Adds regularization to prevent overfitting.
+4. **Bidirectional LSTM (64 units)**: Further processes text with a reduced dimensionality.
+5. **Dense Layer (1 unit)**: Outputs a sigmoid activation for binary classification.
 
-- Implemented a deep learning model using:
-  - **Embedding Layer:** To represent words in a dense vector space.
-  - **Bidirectional LSTM Layers:** To capture contextual information in tweets.
-  - **Dropout Layers:** To prevent overfitting.
-  - **Dense Layer with Sigmoid Activation:** For binary classification.
+**Model Summary:**
+- Total Parameters: **1,707,649**
+- Trainable Parameters: **1,707,649**
+- Non-Trainable Parameters: **0**
 
-- **Early Stopping:** Monitored validation loss to stop training when the model no longer improved.
+---
 
-## Results
+## Training Details
 
-- **Validation Accuracy:** ~78%
-- **Test Accuracy:** ~79%
-- **Loss on Test Set:** ~0.58
+**Key Features:**
+- **Class Weights**: Balanced the dataset to account for the minority disaster class.
+- **Early Stopping**: Monitored validation F1 score with a patience of 2 epochs to prevent overfitting.
+- **Optimizer**: Adam with a learning rate of 0.0001.
 
-Loss and accuracy plots show consistent learning, with room for hyperparameter optimization.
+**Training Results:**
+- **Validation F1 Score**: 0.7490 (peak at epoch 3).
+- Training stopped at epoch 5 due to no further improvement in F1 score.
 
-## Usage
+---
 
-### Dependencies
+## Evaluation Results
 
-To run the code, ensure you have the following dependencies installed:
-- Python 3.x (3.9.20)
-- Pandas
-- NumPy
-- TensorFlow/Keras
-- Scikit-learn
-- Matplotlib
-- Seaborn
+The model was evaluated on the test set, yielding the following metrics:
+- **Test F1 Score**: 0.7384
+- **Test Accuracy**: 78%
+- **Classification Report**:
+  - Class 0 (Non-Disaster): Precision: 0.79, Recall: 0.84, F1 Score: 0.81
+  - Class 1 (Disaster): Precision: 0.77, Recall: 0.71, F1 Score: 0.74
 
-### How to Run
+The weighted F1 score across classes was **0.78**.
 
-1. Clone this repository:
+---
+
+## How to Run
+
+1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/disaster-detection-tweets.git
    cd disaster-detection-tweets
-
